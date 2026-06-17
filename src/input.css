@@ -12,3 +12,12 @@
   --color-sage: #5c7962;
   --color-track: #ddd6d7;
 }
+
+@layer components {
+  .product-scroll {
+    scrollbar-width: none;
+  }
+  .product-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
