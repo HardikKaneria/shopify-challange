@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Source Serif Pro", serif;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-sans: "Poppins", sans-serif;
+
+  --color-ink: #231f20;
+  --color-charcoal: #1c1d1d;
+  --color-meta: #707070;
+  --color-olive: #5c553a;
+  --color-sage: #5c7962;
+  --color-track: #ddd6d7;
+}
