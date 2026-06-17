@@ -63,17 +63,76 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.querySelectorAll("img[data-hover-src]").forEach((img) => {
-    const primarySrc = img.src;
     const hoverSrc = img.dataset.hoverSrc;
 
-    new Image().src = hoverSrc;
+    if (!hoverSrc) return;
 
-    img.addEventListener("mouseenter", () => {
-      img.src = hoverSrc;
-    });
+    const parent = img.parentElement;
+    if (!parent) return;
 
-    img.addEventListener("mouseleave", () => {
-      img.src = primarySrc;
-    });
+    // Preload hover image
+    const preloadImage = new Image();
+    preloadImage.src = hoverSrc;
+
+    // Make sure parent can hold absolute hover image
+    parent.style.position = "relative";
+
+    // Primary image transition
+    img.style.transition = "opacity 300ms ease";
+    img.style.display = "block";
+
+    // Create hover image layer
+    const hoverImg = document.createElement("img");
+    hoverImg.src = hoverSrc;
+    hoverImg.alt = "";
+    hoverImg.setAttribute("aria-hidden", "true");
+    hoverImg.loading = "lazy";
+    hoverImg.draggable = false;
+
+    hoverImg.style.position = "absolute";
+    hoverImg.style.inset = "0";
+    hoverImg.style.width = "100%";
+    hoverImg.style.height = "100%";
+    hoverImg.style.objectFit = "cover";
+    hoverImg.style.opacity = "0";
+    hoverImg.style.transition = "opacity 300ms ease";
+    hoverImg.style.pointerEvents = "none";
+
+    parent.appendChild(hoverImg);
+
+    const showHoverImage = () => {
+      hoverImg.style.opacity = "1";
+    };
+
+    const hideHoverImage = () => {
+      hoverImg.style.opacity = "0";
+    };
+
+    parent.addEventListener("mouseenter", showHoverImage);
+    parent.addEventListener("mouseleave", hideHoverImage);
+
+    const cardLink = img.closest("a");
+
+    if (cardLink) {
+      cardLink.addEventListener("focusin", showHoverImage);
+      cardLink.addEventListener("focusout", hideHoverImage);
+    }
   });
+
+  const showMoreButton = document.getElementById("show-more");
+  const extraCards = document.querySelectorAll(".product-extra");
+
+  if (showMoreButton && extraCards.length) {
+    showMoreButton.addEventListener("click", () => {
+      extraCards.forEach((card, index) => {
+        card.classList.remove("hidden");
+
+        window.setTimeout(() => {
+          card.classList.remove("opacity-0", "translate-y-4");
+        }, 50 + index * 80);
+      });
+
+      showMoreButton.remove();
+    });
+  }
 });
