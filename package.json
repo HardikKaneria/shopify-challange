@@ -5,7 +5,9 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+    "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "build:shopify": "tailwindcss -i ./src/input.shopify.css -o ./shopify-theme/assets/best-sellers.css --minify && node ./scripts/unwrap-css-layers.mjs ./shopify-theme/assets/best-sellers.css",
+    "watch:shopify": "tailwindcss -i ./src/input.shopify.css -o ./shopify-theme/assets/best-sellers.css --watch"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.1",

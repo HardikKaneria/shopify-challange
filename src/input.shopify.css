@@ -1,0 +1,76 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/*
+  Preflight is intentionally not imported here so it doesn't reset every
+  element in the rest of the theme. These are the few Preflight resets the
+  carousel markup actually relies on, scoped to .best-sellers only.
+*/
+:where(.best-sellers) ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+:where(.best-sellers) a {
+  color: inherit;
+  text-decoration: inherit;
+}
+:where(.best-sellers) h1,
+:where(.best-sellers) h2 {
+  margin: 0;
+}
+:where(.best-sellers) button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+}
+
+@theme {
+  --font-serif: "Source Serif Pro", serif;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-sans: "Poppins", sans-serif;
+
+  --color-ink: #231f20;
+  --color-charcoal: #1c1d1d;
+  --color-meta: #707070;
+  --color-olive: #5c553a;
+  --color-sage: #5c7962;
+  --color-track: #ddd6d7;
+}
+
+@layer components {
+  .best-sellers-scroll {
+    scrollbar-width: none;
+  }
+  .best-sellers-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .best-sellers-scroll:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 6px;
+  }
+  .best-sellers__hover-image {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+  .best-sellers__hover-image.is-visible {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.best-sellers) *,
+  :where(.best-sellers) *::before,
+  :where(.best-sellers) *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

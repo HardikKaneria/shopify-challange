@@ -1,2 +1,21 @@
 node_modules/
 .DS_Store
+
+# Shopify theme scaffold — only track the best-sellers section + what it needs to run
+shopify-theme/*
+!shopify-theme/sections/
+shopify-theme/sections/*
+!shopify-theme/sections/best-sellers-carousel.liquid
+!shopify-theme/assets/
+shopify-theme/assets/*
+!shopify-theme/assets/best-sellers.css
+!shopify-theme/assets/best-sellers.js
+!shopify-theme/templates/
+shopify-theme/templates/*
+!shopify-theme/templates/index.json
+!shopify-theme/config/
+shopify-theme/config/*
+!shopify-theme/config/settings_data.json
+
+scripts/
+shopify-products-import.csv

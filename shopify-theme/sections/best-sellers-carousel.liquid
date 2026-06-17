@@ -1,0 +1,300 @@
+{% comment %}
+  Best Sellers product carousel
+  Each product card is a "product" block, fully editable in the theme
+  editor (image, hover image, title, rating, sale badge, price).
+  Desktop: horizontal scroll carousel capped at 1664px. Mobile: 2-col grid,
+  first 4 products visible, Show More reveals remaining 6.
+{% endcomment %}
+
+{{ 'best-sellers.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'best-sellers.js' | asset_url }}" defer></script>
+
+{% liquid
+  assign fallback_images = 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1530711654140-23ef9ad45094?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1559825633-0f26f71354b1?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=800&h=800&q=80' | split: '|'
+
+  assign fallback_hover_images = 'https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1560847468-5eef330f455a?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1550736386-78b14d2601f8?auto=format&fit=crop&w=800&h=800&q=80|https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&h=800&q=80' | split: '|'
+%}
+
+<section
+  id="BestSellers-{{ section.id }}"
+  class="best-sellers full-width overflow-x-hidden py-9 md:py-12"
+  data-best-sellers-section
+  data-section-id="{{ section.id }}"
+  aria-labelledby="best-sellers-heading-{{ section.id }}"
+>
+  <svg class="hidden" aria-hidden="true">
+    <symbol id="icon-star-{{ section.id }}" viewBox="0 0 24 24">
+      <path
+        d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.563.563 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.563.563 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+        stroke-linejoin="round"
+        stroke-width="1"
+      />
+    </symbol>
+  </svg>
+
+  <div class="mx-auto w-full max-w-[1664px] px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+      <h2
+        id="best-sellers-heading-{{ section.id }}"
+        class="font-serif text-[40px] font-black leading-[1.2] tracking-[-0.01em] text-ink"
+      >
+        {{ section.settings.heading | escape }}
+      </h2>
+
+      {% if section.settings.view_all_link != blank and section.settings.view_all_text != blank %}
+        <a
+          href="{{ section.settings.view_all_link }}"
+          class="hidden items-center gap-2 font-sans text-sm font-semibold leading-[1.4] tracking-[0.03em] text-olive transition-colors hover:text-ink sm:inline-flex"
+        >
+          {{ section.settings.view_all_text | escape }}
+
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" />
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="mt-3 sm:relative sm:left-1/2 sm:w-screen sm:-translate-x-1/2 sm:overflow-hidden md:mt-9">
+    <ul
+      id="product-scroll-{{ section.id }}"
+      tabindex="0"
+      class="best-sellers-scroll grid grid-cols-2 gap-4 px-4 sm:flex sm:grid-cols-none sm:flex-nowrap sm:overflow-x-auto sm:overflow-y-hidden sm:overscroll-x-contain sm:scroll-smooth sm:px-[max(24px,calc((100vw-1664px)/2+24px))] lg:px-[max(32px,calc((100vw-1664px)/2+32px))]"
+    >
+      {% for block in section.blocks %}
+        {% liquid
+          assign index = forloop.index0
+          assign title = block.settings.title
+          assign rating = block.settings.rating
+          assign rating_fill = rating | times: 20
+          assign sale_badge_value = block.settings.sale_badge
+          assign price_cents = block.settings.price | times: 100 | round
+          assign is_extra = false
+
+          if forloop.index > 4
+            assign is_extra = true
+          endif
+        %}
+
+        <li
+          {{ block.shopify_attributes }}
+          class="w-full max-w-[355px] transition duration-500 ease-out {% if is_extra %}best-sellers__extra hidden opacity-0 translate-y-4{% endif %} sm:block sm:w-[355px] sm:min-w-[355px] sm:max-w-none sm:flex-none sm:opacity-100 sm:translate-y-0"
+        >
+          <a href="#" class="block">
+            <div class="relative aspect-square w-full overflow-hidden rounded-md bg-gray-100">
+              <span class="absolute left-2 top-2 z-10 inline-flex items-center justify-center rounded-full border border-black bg-white px-2 py-1 text-center font-display text-[8px] font-normal leading-[100%] tracking-[0.04em] text-black sm:text-[10px] sm:tracking-[0.06em]">
+                BEST SELLER
+              </span>
+
+              {% if sale_badge_value != 'none' %}
+                <span class="absolute right-2 top-2 z-10 inline-flex items-center justify-center rounded-full border border-black bg-sage px-2 py-1 text-center font-display text-[8px] font-normal leading-[100%] tracking-[0.04em] text-white sm:text-[10px] sm:tracking-[0.06em]">
+                  SAVE {{ sale_badge_value }}%
+                </span>
+              {% endif %}
+
+              {% if block.settings.image %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 800 }}"
+                  data-hover-src="{% if block.settings.hover_image %}{{ block.settings.hover_image | image_url: width: 800 }}{% else %}{{ fallback_hover_images[index] }}{% endif %}"
+                  alt="{{ block.settings.image.alt | default: title | escape }}"
+                  class="h-full w-full object-cover"
+                  width="800"
+                  height="800"
+                  loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}"
+                  decoding="async"
+                >
+              {% else %}
+                <img
+                  src="{{ fallback_images[index] }}"
+                  data-hover-src="{% if block.settings.hover_image %}{{ block.settings.hover_image | image_url: width: 800 }}{% else %}{{ fallback_hover_images[index] }}{% endif %}"
+                  alt="{{ title | escape }}"
+                  class="h-full w-full object-cover"
+                  width="800"
+                  height="800"
+                  loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}"
+                  decoding="async"
+                >
+              {% endif %}
+            </div>
+
+            <div class="mt-3 space-y-1.5">
+              <h3 class="mb-2 font-display text-[16px] font-normal uppercase leading-[100%] tracking-[0.03em] text-charcoal sm:text-[18px]">
+                {{ title | escape }}
+              </h3>
+
+              <div class="mb-2 flex items-center gap-1.5">
+                <div
+                  class="relative inline-flex h-[9px] w-[53px] sm:h-auto sm:w-auto"
+                  role="img"
+                  aria-label="Rated {{ rating | escape }} out of 5 stars"
+                >
+                  <div class="flex gap-[2px] text-track sm:gap-[2px]">
+                    {% for i in (1..5) %}
+                      <svg class="h-[8px] w-[8px] flex-none sm:h-3.5 sm:w-3.5" fill="currentColor" aria-hidden="true">
+                        <use href="#icon-star-{{ section.id }}"></use>
+                      </svg>
+                    {% endfor %}
+                  </div>
+
+                  <div class="absolute inset-y-0 left-0 overflow-hidden" style="width: {{ rating_fill }}%">
+                    <div class="flex gap-[2px] text-ink sm:gap-[2px]">
+                      {% for i in (1..5) %}
+                        <svg class="h-[8px] w-[8px] flex-none sm:h-3.5 sm:w-3.5" fill="currentColor" aria-hidden="true">
+                          <use href="#icon-star-{{ section.id }}"></use>
+                        </svg>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+
+                <span class="font-sans text-[11px] font-normal leading-[100%] tracking-normal text-meta sm:text-xs">
+                  1,234 Reviews
+                </span>
+              </div>
+
+              <p class="font-sans text-base font-medium uppercase text-charcoal">
+                {{ price_cents | money }}
+              </p>
+            </div>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="mx-auto mt-3 w-full max-w-[1664px] px-4 sm:px-6 md:mt-12 lg:px-8">
+    <div
+      id="scroll-track-{{ section.id }}"
+      class="best-sellers-scrollbar relative hidden h-1 w-full cursor-pointer rounded-md bg-track transition-[height] duration-150 hover:h-1.5 active:h-1.5 sm:block"
+    >
+      <div
+        id="scroll-thumb-{{ section.id }}"
+        class="absolute left-0 top-0 h-full rounded-md bg-ink"
+      ></div>
+    </div>
+
+    <button
+      id="show-more-{{ section.id }}"
+      type="button"
+      aria-expanded="false"
+      aria-controls="product-scroll-{{ section.id }}"
+      class="best-sellers__show-more mx-auto inline-flex h-[54px] w-full max-w-[327px] items-center justify-center gap-[8px] rounded-[100px] bg-ink px-[24px] py-[16px] font-sans text-[16px] font-semibold uppercase leading-[140%] tracking-[0.03em] text-white opacity-100 transition-colors hover:bg-ink hover:text-white sm:hidden"
+    >
+      {{ section.settings.show_more_text | escape }}
+    </button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Best sellers carousel",
+  "tag": "section",
+  "class": "section-best-sellers-carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "Shop all link"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "Shop all text",
+      "default": "Shop All Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "show_more_text",
+      "label": "Show More button text",
+      "default": "Show More"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "hover_image",
+          "label": "Hover image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Product name"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 5
+        },
+        {
+          "type": "select",
+          "id": "sale_badge",
+          "label": "Sale badge",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "10", "label": "10% off" },
+            { "value": "15", "label": "15% off" },
+            { "value": "20", "label": "20% off" },
+            { "value": "25", "label": "25% off" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "info": "Enter the price in dollars, e.g. 104.95",
+          "default": "104.95"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best sellers carousel",
+      "category": "Product",
+      "blocks": [
+        { "type": "product", "settings": { "title": "Outside Vibes Cap Forest Green", "rating": 4.5, "sale_badge": "15", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Studio Headphones Sunshine", "rating": 5, "sale_badge": "none", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Classic Round Sunglasses", "rating": 4, "sale_badge": "10", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Rest In Nature Trail Sneaker Red", "rating": 5, "sale_badge": "none", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Hike Bottle Outside Vibes Forest Green", "rating": 4.5, "sale_badge": "15", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Organic Cotton Tee Charcoal", "rating": 4, "sale_badge": "none", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Weekend Trail Backpack Navy", "rating": 5, "sale_badge": "20", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Wireless Earbuds Case White", "rating": 4.5, "sale_badge": "none", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Steel Travel Tumbler Sage", "rating": 4, "sale_badge": "10", "price": "104.95" } },
+        { "type": "product", "settings": { "title": "Trail Runner Sneaker Olive", "rating": 5, "sale_badge": "none", "price": "104.95" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

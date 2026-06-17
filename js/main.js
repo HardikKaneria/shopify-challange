@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const scroller = document.getElementById("product-scroll");
   const track = document.getElementById("scroll-track");
   const thumb = document.getElementById("scroll-thumb");
@@ -78,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     parent.style.position = "relative";
 
     // Primary image transition
-    img.style.transition = "opacity 300ms ease";
+    img.style.transition = prefersReducedMotion ? "none" : "opacity 300ms ease";
     img.style.display = "block";
 
     // Create hover image layer
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hoverImg.style.height = "100%";
     hoverImg.style.objectFit = "cover";
     hoverImg.style.opacity = "0";
-    hoverImg.style.transition = "opacity 300ms ease";
+    hoverImg.style.transition = prefersReducedMotion ? "none" : "opacity 300ms ease";
     hoverImg.style.pointerEvents = "none";
 
     parent.appendChild(hoverImg);
@@ -124,14 +126,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (showMoreButton && extraCards.length) {
     showMoreButton.addEventListener("click", () => {
+      showMoreButton.setAttribute("aria-expanded", "true");
+
       extraCards.forEach((card, index) => {
         card.classList.remove("hidden");
+        const reveal = () => card.classList.remove("opacity-0", "translate-y-4");
 
-        window.setTimeout(() => {
-          card.classList.remove("opacity-0", "translate-y-4");
-        }, 50 + index * 80);
+        if (prefersReducedMotion) {
+          reveal();
+        } else {
+          window.setTimeout(reveal, 50 + index * 80);
+        }
       });
 
+      extraCards[0].querySelector("a")?.focus();
       showMoreButton.remove();
     });
   }

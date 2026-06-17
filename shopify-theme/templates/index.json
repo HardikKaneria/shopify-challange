@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "best_sellers": {
+      "type": "best-sellers-carousel",
+      "blocks": {
+        "product-1": { "type": "product", "settings": { "title": "Outside Vibes Cap Forest Green", "rating": 4.5, "sale_badge": "15", "price": "104.95" } },
+        "product-2": { "type": "product", "settings": { "title": "Studio Headphones Sunshine", "rating": 5, "sale_badge": "none", "price": "104.95" } },
+        "product-3": { "type": "product", "settings": { "title": "Classic Round Sunglasses", "rating": 4, "sale_badge": "10", "price": "104.95" } },
+        "product-4": { "type": "product", "settings": { "title": "Rest In Nature Trail Sneaker Red", "rating": 5, "sale_badge": "none", "price": "104.95" } },
+        "product-5": { "type": "product", "settings": { "title": "Hike Bottle Outside Vibes Forest Green", "rating": 4.5, "sale_badge": "15", "price": "104.95" } },
+        "product-6": { "type": "product", "settings": { "title": "Organic Cotton Tee Charcoal", "rating": 4, "sale_badge": "none", "price": "104.95" } },
+        "product-7": { "type": "product", "settings": { "title": "Weekend Trail Backpack Navy", "rating": 5, "sale_badge": "20", "price": "104.95" } },
+        "product-8": { "type": "product", "settings": { "title": "Wireless Earbuds Case White", "rating": 4.5, "sale_badge": "none", "price": "104.95" } },
+        "product-9": { "type": "product", "settings": { "title": "Steel Travel Tumbler Sage", "rating": 4, "sale_badge": "10", "price": "104.95" } },
+        "product-10": { "type": "product", "settings": { "title": "Trail Runner Sneaker Olive", "rating": 5, "sale_badge": "none", "price": "104.95" } }
+      },
+      "block_order": ["product-1", "product-2", "product-3", "product-4", "product-5", "product-6", "product-7", "product-8", "product-9", "product-10"],
+      "settings": {}
+    }
+  },
+  "order": [
+    "best_sellers"
+  ]
+}
